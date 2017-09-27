@@ -56,7 +56,7 @@ namespace OsuDeleter1
         {
             //osuDirectory = directoryTextBox.ToString();
         }
-
+        //
 
         bool jpgFilesChecked = false;
         bool pngFilesChecked = false;
