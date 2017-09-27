@@ -136,7 +136,7 @@ namespace OsuDeleter1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Console.WriteLine($"{osuDirectory}");
+         
         }
 
         private void deleteFilesButton_Click(object sender, EventArgs e)
