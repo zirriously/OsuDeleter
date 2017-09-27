@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.directoryTextBox = new System.Windows.Forms.TextBox();
             this.directoryButton = new System.Windows.Forms.Button();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
@@ -178,6 +179,7 @@
             this.Controls.Add(this.jpgFilesTickBox);
             this.Controls.Add(this.directoryButton);
             this.Controls.Add(this.directoryTextBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "OsuDeleter";
             this.ResumeLayout(false);

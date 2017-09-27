@@ -139,6 +139,7 @@
     <None Include="Resources\OsuDeleterBG.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icon1.ico" />
     <Content Include="OsuDeleterIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
