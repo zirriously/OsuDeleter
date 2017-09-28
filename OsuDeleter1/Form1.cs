@@ -11,6 +11,8 @@ namespace OsuDeleter1
         public Form1()
         {
             InitializeComponent();
+            TotalFileSizeNumberLabel.Text = "";
+            amountOfFilesFoundNumberLabel.Text = "";
         }
 
         private string _osuDirectory;
@@ -114,13 +116,13 @@ namespace OsuDeleter1
                     DeleteFilesButton.Enabled = true;
                     AmountOfFilesTextLabel.Enabled = true;
                     amountOfFilesFoundNumberLabel.Show();
+                    // Get total size of all files and show next to total amount of files
+                    TotalFileSize.Enabled = true;
                 }
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
+
 
         private void DeleteFilesButton_Click(object sender, EventArgs e)
         {

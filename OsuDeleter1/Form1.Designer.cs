@@ -42,6 +42,8 @@
             this.AmountOfFilesTextLabel = new System.Windows.Forms.Label();
             this.amountOfFilesFoundNumberLabel = new System.Windows.Forms.Label();
             this.DeleteFilesButton = new System.Windows.Forms.Button();
+            this.TotalFileSize = new System.Windows.Forms.Label();
+            this.TotalFileSizeNumberLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // directoryTextBox
@@ -147,8 +149,9 @@
             this.amountOfFilesFoundNumberLabel.AutoSize = true;
             this.amountOfFilesFoundNumberLabel.Location = new System.Drawing.Point(311, 56);
             this.amountOfFilesFoundNumberLabel.Name = "amountOfFilesFoundNumberLabel";
-            this.amountOfFilesFoundNumberLabel.Size = new System.Drawing.Size(0, 13);
+            this.amountOfFilesFoundNumberLabel.Size = new System.Drawing.Size(13, 13);
             this.amountOfFilesFoundNumberLabel.TabIndex = 11;
+            this.amountOfFilesFoundNumberLabel.Text = "0";
             // 
             // DeleteFilesButton
             // 
@@ -163,12 +166,33 @@
             this.DeleteFilesButton.UseVisualStyleBackColor = false;
             this.DeleteFilesButton.Click += new System.EventHandler(this.DeleteFilesButton_Click);
             // 
+            // TotalFileSize
+            // 
+            this.TotalFileSize.AutoSize = true;
+            this.TotalFileSize.Enabled = false;
+            this.TotalFileSize.Location = new System.Drawing.Point(204, 72);
+            this.TotalFileSize.Name = "TotalFileSize";
+            this.TotalFileSize.Size = new System.Drawing.Size(88, 13);
+            this.TotalFileSize.TabIndex = 13;
+            this.TotalFileSize.Text = "Total size of files:";
+            // 
+            // TotalFileSizeNumberLabel
+            // 
+            this.TotalFileSizeNumberLabel.AutoSize = true;
+            this.TotalFileSizeNumberLabel.Location = new System.Drawing.Point(289, 73);
+            this.TotalFileSizeNumberLabel.Name = "TotalFileSizeNumberLabel";
+            this.TotalFileSizeNumberLabel.Size = new System.Drawing.Size(13, 13);
+            this.TotalFileSizeNumberLabel.TabIndex = 14;
+            this.TotalFileSizeNumberLabel.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(445, 120);
+            this.Controls.Add(this.TotalFileSizeNumberLabel);
+            this.Controls.Add(this.TotalFileSize);
             this.Controls.Add(this.DeleteFilesButton);
             this.Controls.Add(this.amountOfFilesFoundNumberLabel);
             this.Controls.Add(this.AmountOfFilesTextLabel);
@@ -206,6 +230,8 @@
         private System.Windows.Forms.Label AmountOfFilesTextLabel;
         private System.Windows.Forms.Label amountOfFilesFoundNumberLabel;
         private System.Windows.Forms.Button DeleteFilesButton;
+        private System.Windows.Forms.Label TotalFileSize;
+        private System.Windows.Forms.Label TotalFileSizeNumberLabel;
     }
 }
 
