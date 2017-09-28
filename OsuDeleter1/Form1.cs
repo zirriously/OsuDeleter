@@ -86,7 +86,7 @@ namespace OsuDeleter1
         private bool CheckboxesActive => jpgFilesTickBox.Checked || pngFilesCheckBox.Checked ||
                                          wavFilesCheckBox.Checked || aviFilesCheckBox.Checked;
 
-        private readonly List<string> fileList = new List<string>();
+        private readonly List<string> _fileList = new List<string>();
 
         private double count;
 
@@ -96,22 +96,22 @@ namespace OsuDeleter1
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
             if (_osuDirectory != null)
             {
-                fileList.Clear();
+                _fileList.Clear();
                 if (_jpgFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
+                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
                 if (_pngFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
+                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
                 if (_wavFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.wav", SearchOption.AllDirectories));
+                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.wav", SearchOption.AllDirectories));
                 if (_aviFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.avi", SearchOption.AllDirectories));
-                if (fileList.Count == 0)
+                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.avi", SearchOption.AllDirectories));
+                if (_fileList.Count == 0)
                 {
                     MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
                 }
                 else
                 {
-                    count = fileList.Count();
+                    count = _fileList.Count();
                     amountOfFilesFoundNumberLabel.Text = count.ToString();
                     DeleteFilesButton.Enabled = true;
                     AmountOfFilesTextLabel.Enabled = true;
@@ -127,11 +127,11 @@ namespace OsuDeleter1
         private void DeleteFilesButton_Click(object sender, EventArgs e)
         {
             _dialogResult = _dialogResult =
-                MessageBox.Show($"Are you sure you want to delete {fileList.Count()} file(s)?", "",
+                MessageBox.Show($"Are you sure you want to delete {_fileList.Count()} file(s)?", "",
                     MessageBoxButtons.YesNo);
             if (_dialogResult == DialogResult.Yes)
             {
-                foreach (var i in fileList)
+                foreach (var i in _fileList)
                     File.Delete(Convert.ToString(i));
                 MessageBox.Show($"{count} files have been deleted.");
             }
