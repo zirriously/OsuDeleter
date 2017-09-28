@@ -56,28 +56,28 @@ namespace OsuDeleter1
         private void jpgFilesTickBox_CheckedChanged(object sender, EventArgs e)
         {
             _jpgFilesChecked = jpgFilesTickBox.Checked;
-            beginScanButton.Enabled = CheckboxesActive;
+            BeginScanButton.Enabled = CheckboxesActive;
             //Console.WriteLine($"_jpgFilesChecked = {_jpgFilesChecked}");
         }
 
         private void pngFilesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _pngFilesChecked = pngFilesCheckBox.Checked;
-            beginScanButton.Enabled = CheckboxesActive;
+            BeginScanButton.Enabled = CheckboxesActive;
             //Console.WriteLine($"_pngFilesChecked = {_pngFilesChecked}");
         }
 
         private void wavFilesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _wavFilesChecked = wavFilesCheckBox.Checked;
-            beginScanButton.Enabled = CheckboxesActive;
+            BeginScanButton.Enabled = CheckboxesActive;
             //Console.WriteLine($"_wavFilesChecked = {_wavFilesChecked}");
         }
 
         private void aviFilesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _aviFilesChecked = aviFilesCheckBox.Checked;
-            beginScanButton.Enabled = CheckboxesActive;
+            BeginScanButton.Enabled = CheckboxesActive;
             //Console.WriteLine($"_aviFilesChecked = {_aviFilesChecked}");
         }
 
@@ -88,7 +88,7 @@ namespace OsuDeleter1
 
         private double count;
 
-        private void beginScanButton_Click(object sender, EventArgs e)
+        private void BeginScanButton_Click(object sender, EventArgs e)
         {
             if (_osuDirectory == null)
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
@@ -111,8 +111,8 @@ namespace OsuDeleter1
                 {
                     count = fileList.Count();
                     amountOfFilesFoundNumberLabel.Text = count.ToString();
-                    deleteFilesButton.Enabled = true;
-                    amountOfFilesTextLabel.Enabled = true;
+                    DeleteFilesButton.Enabled = true;
+                    AmountOfFilesTextLabel.Enabled = true;
                     amountOfFilesFoundNumberLabel.Show();
                 }
             }
@@ -122,7 +122,7 @@ namespace OsuDeleter1
         {
         }
 
-        private void deleteFilesButton_Click(object sender, EventArgs e)
+        private void DeleteFilesButton_Click(object sender, EventArgs e)
         {
             _dialogResult = _dialogResult =
                 MessageBox.Show($"Are you sure you want to delete {fileList.Count()} file(s)?", "",

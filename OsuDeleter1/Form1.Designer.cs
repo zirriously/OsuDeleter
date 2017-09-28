@@ -38,10 +38,10 @@
             this.aviFilesCheckBox = new System.Windows.Forms.CheckBox();
             this.wavFilesCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.beginScanButton = new System.Windows.Forms.Button();
-            this.amountOfFilesTextLabel = new System.Windows.Forms.Label();
+            this.BeginScanButton = new System.Windows.Forms.Button();
+            this.AmountOfFilesTextLabel = new System.Windows.Forms.Label();
             this.amountOfFilesFoundNumberLabel = new System.Windows.Forms.Label();
-            this.deleteFilesButton = new System.Windows.Forms.Button();
+            this.DeleteFilesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // directoryTextBox
@@ -117,30 +117,30 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Select which files to delete";
             // 
-            // beginScanButton
+            // BeginScanButton
             // 
-            this.beginScanButton.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.beginScanButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.beginScanButton.Enabled = false;
-            this.beginScanButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.beginScanButton.FlatAppearance.BorderSize = 0;
-            this.beginScanButton.Location = new System.Drawing.Point(127, 52);
-            this.beginScanButton.Name = "beginScanButton";
-            this.beginScanButton.Size = new System.Drawing.Size(75, 23);
-            this.beginScanButton.TabIndex = 8;
-            this.beginScanButton.Text = "Begin scan";
-            this.beginScanButton.UseVisualStyleBackColor = false;
-            this.beginScanButton.Click += new System.EventHandler(this.beginScanButton_Click);
+            this.BeginScanButton.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.BeginScanButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BeginScanButton.Enabled = false;
+            this.BeginScanButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.BeginScanButton.FlatAppearance.BorderSize = 0;
+            this.BeginScanButton.Location = new System.Drawing.Point(127, 52);
+            this.BeginScanButton.Name = "BeginScanButton";
+            this.BeginScanButton.Size = new System.Drawing.Size(75, 23);
+            this.BeginScanButton.TabIndex = 8;
+            this.BeginScanButton.Text = "Begin scan";
+            this.BeginScanButton.UseVisualStyleBackColor = false;
+            this.BeginScanButton.Click += new System.EventHandler(this.BeginScanButton_Click);
             // 
-            // amountOfFilesTextLabel
+            // AmountOfFilesTextLabel
             // 
-            this.amountOfFilesTextLabel.AutoSize = true;
-            this.amountOfFilesTextLabel.Enabled = false;
-            this.amountOfFilesTextLabel.Location = new System.Drawing.Point(204, 56);
-            this.amountOfFilesTextLabel.Name = "amountOfFilesTextLabel";
-            this.amountOfFilesTextLabel.Size = new System.Drawing.Size(109, 13);
-            this.amountOfFilesTextLabel.TabIndex = 10;
-            this.amountOfFilesTextLabel.Text = "Amount of files found:";
+            this.AmountOfFilesTextLabel.AutoSize = true;
+            this.AmountOfFilesTextLabel.Enabled = false;
+            this.AmountOfFilesTextLabel.Location = new System.Drawing.Point(204, 56);
+            this.AmountOfFilesTextLabel.Name = "AmountOfFilesTextLabel";
+            this.AmountOfFilesTextLabel.Size = new System.Drawing.Size(109, 13);
+            this.AmountOfFilesTextLabel.TabIndex = 10;
+            this.AmountOfFilesTextLabel.Text = "Amount of files found:";
             // 
             // amountOfFilesFoundNumberLabel
             // 
@@ -150,28 +150,28 @@
             this.amountOfFilesFoundNumberLabel.Size = new System.Drawing.Size(0, 13);
             this.amountOfFilesFoundNumberLabel.TabIndex = 11;
             // 
-            // deleteFilesButton
+            // DeleteFilesButton
             // 
-            this.deleteFilesButton.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.deleteFilesButton.Enabled = false;
-            this.deleteFilesButton.FlatAppearance.BorderSize = 0;
-            this.deleteFilesButton.Location = new System.Drawing.Point(127, 92);
-            this.deleteFilesButton.Name = "deleteFilesButton";
-            this.deleteFilesButton.Size = new System.Drawing.Size(75, 23);
-            this.deleteFilesButton.TabIndex = 12;
-            this.deleteFilesButton.Text = "Delete files";
-            this.deleteFilesButton.UseVisualStyleBackColor = false;
-            this.deleteFilesButton.Click += new System.EventHandler(this.deleteFilesButton_Click);
+            this.DeleteFilesButton.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.DeleteFilesButton.Enabled = false;
+            this.DeleteFilesButton.FlatAppearance.BorderSize = 0;
+            this.DeleteFilesButton.Location = new System.Drawing.Point(127, 92);
+            this.DeleteFilesButton.Name = "DeleteFilesButton";
+            this.DeleteFilesButton.Size = new System.Drawing.Size(75, 23);
+            this.DeleteFilesButton.TabIndex = 12;
+            this.DeleteFilesButton.Text = "Delete files";
+            this.DeleteFilesButton.UseVisualStyleBackColor = false;
+            this.DeleteFilesButton.Click += new System.EventHandler(this.DeleteFilesButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(445, 120);
-            this.Controls.Add(this.deleteFilesButton);
+            this.Controls.Add(this.DeleteFilesButton);
             this.Controls.Add(this.amountOfFilesFoundNumberLabel);
-            this.Controls.Add(this.amountOfFilesTextLabel);
-            this.Controls.Add(this.beginScanButton);
+            this.Controls.Add(this.AmountOfFilesTextLabel);
+            this.Controls.Add(this.BeginScanButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.aviFilesCheckBox);
             this.Controls.Add(this.wavFilesCheckBox);
@@ -198,10 +198,10 @@
         private System.Windows.Forms.CheckBox aviFilesCheckBox;
         private System.Windows.Forms.CheckBox wavFilesCheckBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button beginScanButton;
-        private System.Windows.Forms.Label amountOfFilesTextLabel;
+        private System.Windows.Forms.Button BeginScanButton;
+        private System.Windows.Forms.Label AmountOfFilesTextLabel;
         private System.Windows.Forms.Label amountOfFilesFoundNumberLabel;
-        private System.Windows.Forms.Button deleteFilesButton;
+        private System.Windows.Forms.Button DeleteFilesButton;
     }
 }
 
