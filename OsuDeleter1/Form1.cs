@@ -13,8 +13,8 @@ namespace OsuDeleter1
             InitializeComponent();
         }
 
-        private string osuDirectory;
-        private DialogResult dialogResult;
+        private string _osuDirectory;
+        private DialogResult _dialogResult;
 
         public void directoryButton_Click(object sender, EventArgs e)
         {
@@ -23,62 +23,62 @@ namespace OsuDeleter1
                 if (folderBrowserDialog1.SelectedPath.Contains("osu"))
                 {
                     if (folderBrowserDialog1.SelectedPath.Contains("\\Songs"))
-                        osuDirectory = folderBrowserDialog1.SelectedPath;
+                        _osuDirectory = folderBrowserDialog1.SelectedPath;
                     else
-                        osuDirectory = folderBrowserDialog1.SelectedPath + "\\Songs";
+                        _osuDirectory = folderBrowserDialog1.SelectedPath + "\\Songs";
                 }
                 else
                 {
-                    dialogResult = MessageBox.Show(
+                    _dialogResult = MessageBox.Show(
                         $"It looks like you didn't choose the Osu! directory. The directory you have selected is {folderBrowserDialog1.SelectedPath}. \nAre you sure you want to use this directory?",
                         "Incorrect path", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                        osuDirectory = folderBrowserDialog1.SelectedPath;
-                    if (dialogResult == DialogResult.No)
+                    if (_dialogResult == DialogResult.Yes)
+                        _osuDirectory = folderBrowserDialog1.SelectedPath;
+                    if (_dialogResult == DialogResult.No)
                         MessageBox.Show("Please pick another directory.");
                 }
             else
                 MessageBox.Show("The path selected does not exist.");
-            directoryTextBox.Text = osuDirectory;
+            directoryTextBox.Text = _osuDirectory;
         }
 
         private void directoryTextBox_TextChanged(object sender, EventArgs e)
         {
-            //osuDirectory = directoryTextBox.ToString();
+            //_osuDirectory = directoryTextBox.ToString();
         }
 
 
-        private bool jpgFilesChecked;
-        private bool pngFilesChecked;
-        private bool wavFilesChecked;
-        private bool aviFilesChecked;
+        private bool _jpgFilesChecked;
+        private bool _pngFilesChecked;
+        private bool _wavFilesChecked;
+        private bool _aviFilesChecked;
 
         private void jpgFilesTickBox_CheckedChanged(object sender, EventArgs e)
         {
-            jpgFilesChecked = jpgFilesTickBox.Checked;
+            _jpgFilesChecked = jpgFilesTickBox.Checked;
             beginScanButton.Enabled = CheckboxesActive;
-            //Console.WriteLine($"jpgFilesChecked = {jpgFilesChecked}");
+            //Console.WriteLine($"_jpgFilesChecked = {_jpgFilesChecked}");
         }
 
         private void pngFilesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            pngFilesChecked = pngFilesCheckBox.Checked;
+            _pngFilesChecked = pngFilesCheckBox.Checked;
             beginScanButton.Enabled = CheckboxesActive;
-            //Console.WriteLine($"pngFilesChecked = {pngFilesChecked}");
+            //Console.WriteLine($"_pngFilesChecked = {_pngFilesChecked}");
         }
 
         private void wavFilesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            wavFilesChecked = wavFilesCheckBox.Checked;
+            _wavFilesChecked = wavFilesCheckBox.Checked;
             beginScanButton.Enabled = CheckboxesActive;
-            //Console.WriteLine($"wavFilesChecked = {wavFilesChecked}");
+            //Console.WriteLine($"_wavFilesChecked = {_wavFilesChecked}");
         }
 
         private void aviFilesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            aviFilesChecked = aviFilesCheckBox.Checked;
+            _aviFilesChecked = aviFilesCheckBox.Checked;
             beginScanButton.Enabled = CheckboxesActive;
-            //Console.WriteLine($"aviFilesChecked = {aviFilesChecked}");
+            //Console.WriteLine($"_aviFilesChecked = {_aviFilesChecked}");
         }
 
         private bool CheckboxesActive => jpgFilesTickBox.Checked || pngFilesCheckBox.Checked ||
@@ -90,19 +90,19 @@ namespace OsuDeleter1
 
         private void beginScanButton_Click(object sender, EventArgs e)
         {
-            if (osuDirectory == null)
+            if (_osuDirectory == null)
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
-            if (osuDirectory != null)
+            if (_osuDirectory != null)
             {
                 fileList.Clear();
-                if (jpgFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(osuDirectory, "*.jpg", SearchOption.AllDirectories));
-                if (pngFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(osuDirectory, "*.png", SearchOption.AllDirectories));
-                if (wavFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(osuDirectory, "*.wav", SearchOption.AllDirectories));
-                if (aviFilesChecked)
-                    fileList.AddRange(Directory.GetFiles(osuDirectory, "*.avi", SearchOption.AllDirectories));
+                if (_jpgFilesChecked)
+                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
+                if (_pngFilesChecked)
+                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
+                if (_wavFilesChecked)
+                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.wav", SearchOption.AllDirectories));
+                if (_aviFilesChecked)
+                    fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.avi", SearchOption.AllDirectories));
                 if (fileList.Count == 0)
                 {
                     MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
@@ -124,17 +124,19 @@ namespace OsuDeleter1
 
         private void deleteFilesButton_Click(object sender, EventArgs e)
         {
-            dialogResult = dialogResult =
+            _dialogResult = _dialogResult =
                 MessageBox.Show($"Are you sure you want to delete {fileList.Count()} file(s)?", "",
                     MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (_dialogResult == DialogResult.Yes)
             {
                 foreach (var i in fileList)
                     File.Delete(Convert.ToString(i));
                 MessageBox.Show($"{count} files have been deleted.");
             }
             else
+            {
                 MessageBox.Show("Deletion cancelled.");
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
