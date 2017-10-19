@@ -118,6 +118,13 @@ namespace OsuDeleter1
                     amountOfFilesFoundNumberLabel.Show();
                     // Get total size of all files and show next to total amount of files
                     TotalFileSize.Enabled = true;
+                    float totalSize = 0;
+                    foreach (var value in _fileList)
+                    {
+                        FileInfo fileInfo = new FileInfo(value);
+                        totalSize = totalSize + fileInfo.Length;
+                    }
+                    TotalFileSizeNumberLabel.Text = Convert.ToString(totalSize);
                 }
             }
         }

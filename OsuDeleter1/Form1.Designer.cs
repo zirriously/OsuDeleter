@@ -179,7 +179,7 @@
             // TotalFileSizeNumberLabel
             // 
             this.TotalFileSizeNumberLabel.AutoSize = true;
-            this.TotalFileSizeNumberLabel.Location = new System.Drawing.Point(289, 73);
+            this.TotalFileSizeNumberLabel.Location = new System.Drawing.Point(288, 72);
             this.TotalFileSizeNumberLabel.Name = "TotalFileSizeNumberLabel";
             this.TotalFileSizeNumberLabel.Size = new System.Drawing.Size(13, 13);
             this.TotalFileSizeNumberLabel.TabIndex = 14;
