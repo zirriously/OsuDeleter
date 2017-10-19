@@ -1,3 +1,5 @@
+![](https://i.imgur.com/ejOrrWd.png)
+
 Deletes file extensions you choose from the Osu directory.
 
 I made it because my Osu folder was in the tens of gigabytes.
