@@ -16,6 +16,7 @@ namespace OsuDeleter1
             InitializeComponent();
             TotalFileSizeNumberLabel.Text = "";
             amountOfFilesFoundNumberLabel.Text = "";
+            clearFilesButton.Enabled = false;
         }
 
         private string _osuDirectory;
@@ -113,7 +114,7 @@ namespace OsuDeleter1
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Error - Access denied");
+                    MessageBox.Show("Error - Access denied. Try running the program as administrator (certain system directories will always deny access, e.g. recycle bin)");
                     return;
                 }
                 if (_fileList.Count == 0)
@@ -127,6 +128,7 @@ namespace OsuDeleter1
                     DeleteFilesButton.Enabled = true;
                     AmountOfFilesTextLabel.Enabled = true;
                     amountOfFilesFoundNumberLabel.Show();
+                    TotalFileSizeNumberLabel.Show();
                     // Get total size of all files and show next to total amount of files
                     TotalFileSize.Enabled = true;
                     double totalSize = 0;
@@ -137,6 +139,7 @@ namespace OsuDeleter1
                     }
                     var totalSizeHumanized = totalSize.Bytes();
                     TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
+                    clearFilesButton.Enabled = true;
                 }
             }
         }
@@ -154,14 +157,22 @@ namespace OsuDeleter1
                     File.Delete(Convert.ToString(i));
                 MessageBox.Show($"{count} files have been deleted.");
             }
-            else
-            {
-                MessageBox.Show("Deletion cancelled.");
-            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+        }
+
+        private void clearFilesButton_Click(object sender, EventArgs e)
+        {
+            TotalFileSizeNumberLabel.Text = "";
+            amountOfFilesFoundNumberLabel.Text = "";
+            AmountOfFilesTextLabel.Enabled = false;
+            TotalFileSize.Enabled = false;
+            TotalFileSizeNumberLabel.Hide();
+            amountOfFilesFoundNumberLabel.Hide();
+            DeleteFilesButton.Enabled = false;
+            _fileList.Clear();
         }
     }
 }

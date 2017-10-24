@@ -44,6 +44,7 @@
             this.DeleteFilesButton = new System.Windows.Forms.Button();
             this.TotalFileSize = new System.Windows.Forms.Label();
             this.TotalFileSizeNumberLabel = new System.Windows.Forms.Label();
+            this.clearFilesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // directoryTextBox
@@ -185,12 +186,23 @@
             this.TotalFileSizeNumberLabel.TabIndex = 14;
             this.TotalFileSizeNumberLabel.Text = "0";
             // 
+            // clearFilesButton
+            // 
+            this.clearFilesButton.Location = new System.Drawing.Point(380, 92);
+            this.clearFilesButton.Name = "clearFilesButton";
+            this.clearFilesButton.Size = new System.Drawing.Size(53, 23);
+            this.clearFilesButton.TabIndex = 15;
+            this.clearFilesButton.Text = "Clear";
+            this.clearFilesButton.UseVisualStyleBackColor = true;
+            this.clearFilesButton.Click += new System.EventHandler(this.clearFilesButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(445, 120);
+            this.Controls.Add(this.clearFilesButton);
             this.Controls.Add(this.TotalFileSizeNumberLabel);
             this.Controls.Add(this.TotalFileSize);
             this.Controls.Add(this.DeleteFilesButton);
@@ -232,6 +244,7 @@
         private System.Windows.Forms.Button DeleteFilesButton;
         private System.Windows.Forms.Label TotalFileSize;
         private System.Windows.Forms.Label TotalFileSizeNumberLabel;
+        private System.Windows.Forms.Button clearFilesButton;
     }
 }
 
