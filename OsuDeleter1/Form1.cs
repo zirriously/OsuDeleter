@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 using Humanizer;
 
@@ -99,14 +100,22 @@ namespace OsuDeleter1
             if (_osuDirectory != null)
             {
                 _fileList.Clear();
-                if (_jpgFilesChecked)
-                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
-                if (_pngFilesChecked)
-                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
-                if (_wavFilesChecked)
-                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.wav", SearchOption.AllDirectories));
-                if (_aviFilesChecked)
-                    _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.avi", SearchOption.AllDirectories));
+                try
+                {
+                    if (_jpgFilesChecked)
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
+                    if (_pngFilesChecked)
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
+                    if (_wavFilesChecked)
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.wav", SearchOption.AllDirectories));
+                    if (_aviFilesChecked)
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.avi", SearchOption.AllDirectories));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error - Access denied");
+                    return;
+                }
                 if (_fileList.Count == 0)
                 {
                     MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
@@ -120,7 +129,7 @@ namespace OsuDeleter1
                     amountOfFilesFoundNumberLabel.Show();
                     // Get total size of all files and show next to total amount of files
                     TotalFileSize.Enabled = true;
-                    Int64 totalSize = 0;
+                    double totalSize = 0;
                     foreach (var value in _fileList)
                     {
                         FileInfo fileInfo = new FileInfo(value);
