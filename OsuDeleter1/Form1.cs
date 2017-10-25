@@ -102,13 +102,17 @@ namespace OsuDeleter1
                 return Task.Run(() =>
                 {
                     if (_jpgFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.jpg");
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".jpg", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, "*.jpg");
                     if (_pngFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.png");
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".png", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, "*.png");
                     if (_wavFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.wav");
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".wav", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, "*.wav");
                     if (_aviFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, ".avi");
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".avi", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, ".avi");
                 });
         }
 
