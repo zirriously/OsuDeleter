@@ -98,7 +98,7 @@ namespace OsuDeleter1
 
         private Task ScanFilesTask()
         {
-            var t = Task.Run(() => ScanFilesTask());
+            var t = Task.Run(ScanFilesTask);
             FileList.Clear();
             try
             {
@@ -127,11 +127,11 @@ namespace OsuDeleter1
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
             else
                 await ScanFilesTask();
-            if (FileList.Count == 0)
+            if (FileList.Count == 0 && _osuDirectory != null)
             {
                 MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
             }
-            else
+            else if (_osuDirectory != null)
             {
                 _count = FileList.Count;
                 amountOfFilesFoundNumberLabel.Text = _count.ToString();
@@ -155,6 +155,19 @@ namespace OsuDeleter1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+        }
+
+        private void DeleteFilesButton_Click(object sender, EventArgs e)
+        {
+            _dialogResult = _dialogResult =
+                MessageBox.Show($"Are you sure you want to delete {FileList.Count()} file(s)?", "",
+                    MessageBoxButtons.YesNo);
+            if (_dialogResult == DialogResult.Yes)
+            {
+                FileDeleter.DeleteFiles(FileList);
+                MessageBox.Show($"{_count} files has been deleted.");
+                ClearLabels();
+            }
         }
 
         private void ClearLabels()
