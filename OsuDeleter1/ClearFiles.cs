@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OsuDeleter1
 {
-    class FileDeleter
+    public class ClearFiles
     {
-        // TO BE ADDED
+        // TO BE ADDED - CLEARS ALL CURRENTLY FOUND FILES AND RESETS BUTTONS
     }
 }

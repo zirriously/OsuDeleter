@@ -91,46 +91,41 @@ namespace OsuDeleter1
         private bool CheckboxesActive => jpgFilesTickBox.Checked || pngFilesCheckBox.Checked ||
                                          wavFilesCheckBox.Checked || aviFilesCheckBox.Checked;
 
-        public static List<string> FileList = new List<string>();
+        public List<string> _fileList = new List<string>();
 
-        private double _count;
+        private double count;
 
         private void BeginScanButton_Click(object sender, EventArgs e)
         {
-
-
-
-
-
             if (_osuDirectory == null)
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
-            else
+            if (_osuDirectory != null)
             {
-                FileList.Clear(); 
+                _fileList.Clear(); 
                 try
                 {
                     if (_jpgFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.jpg");
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
                     if (_pngFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.png");
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
                     if (_wavFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.wav");
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.wav", SearchOption.AllDirectories));
                     if (_aviFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, ".avi");
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.avi", SearchOption.AllDirectories));
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Error - Access denied. Try running the program as administrator (certain system directories will always deny access, e.g. recycle bin)");
                     return;
                 }
-                if (FileList.Count == 0)
+                if (_fileList.Count == 0)
                 {
                     MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
                 }
                 else
                 {
-                    _count = FileList.Count;
-                    amountOfFilesFoundNumberLabel.Text = _count.ToString();
+                    count = _fileList.Count();
+                    amountOfFilesFoundNumberLabel.Text = count.ToString();
                     DeleteFilesButton.Enabled = true;
                     AmountOfFilesTextLabel.Enabled = true;
                     amountOfFilesFoundNumberLabel.Show();
@@ -138,7 +133,7 @@ namespace OsuDeleter1
                     // Get total size of all files and show next to total amount of files
                     TotalFileSize.Enabled = true;
                     double totalSize = 0;
-                    foreach (var value in FileList)
+                    foreach (var value in _fileList)
                     {
                         FileInfo fileInfo = new FileInfo(value);
                         totalSize += fileInfo.Length;
@@ -155,13 +150,13 @@ namespace OsuDeleter1
         private void DeleteFilesButton_Click(object sender, EventArgs e)
         {
             _dialogResult = _dialogResult =
-                MessageBox.Show($"Are you sure you want to delete {FileList.Count()} file(s)?", "",
+                MessageBox.Show($"Are you sure you want to delete {_fileList.Count()} file(s)?", "",
                     MessageBoxButtons.YesNo);
             if (_dialogResult == DialogResult.Yes)
             {
-                FileDeleter.DeleteFiles(FileList);
-                MessageBox.Show($"{_count} files has been deleted.");
-                ClearLabels();
+                foreach (var i in _fileList)
+                    File.Delete(Convert.ToString(i));
+                MessageBox.Show($"{count} files have been deleted.");
             }
         }
 
@@ -169,9 +164,8 @@ namespace OsuDeleter1
         {
         }
 
-        private void ClearLabels()
+        private void clearFilesButton_Click(object sender, EventArgs e)
         {
-            _count = 0;
             TotalFileSizeNumberLabel.Text = "";
             amountOfFilesFoundNumberLabel.Text = "";
             AmountOfFilesTextLabel.Enabled = false;
@@ -179,12 +173,7 @@ namespace OsuDeleter1
             TotalFileSizeNumberLabel.Hide();
             amountOfFilesFoundNumberLabel.Hide();
             DeleteFilesButton.Enabled = false;
-            FileList.Clear();
-        }
-
-        private void clearFilesButton_Click(object sender, EventArgs e)
-        {
-            ClearLabels();
+            _fileList.Clear();
         }
     }
 }
