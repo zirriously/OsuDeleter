@@ -126,23 +126,28 @@ namespace OsuDeleter1
                 }
                 else
                 {
+                    
+                    //Buttons and labels
                     _count = FileList.Count;
                     amountOfFilesFoundNumberLabel.Text = _count.ToString();
                     DeleteFilesButton.Enabled = true;
                     AmountOfFilesTextLabel.Enabled = true;
                     amountOfFilesFoundNumberLabel.Show();
                     TotalFileSizeNumberLabel.Show();
-                    // Get total size of all files and show next to total amount of files
                     TotalFileSize.Enabled = true;
+                    clearFilesButton.Enabled = true;
+
+                    // Get total size of all files and show next to total amount of files
                     double totalSize = 0;
                     foreach (var value in FileList)
                     {
                         FileInfo fileInfo = new FileInfo(value);
                         totalSize += fileInfo.Length;
                     }
+
+                    // Humanising size
                     var totalSizeHumanized = totalSize.Bytes();
                     TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
-                    clearFilesButton.Enabled = true;
                 }
             }
         }
@@ -180,7 +185,7 @@ namespace OsuDeleter1
         {
         }
 
-        private void ClearLabels()
+        private void ClearLabels() // Should make this a toggleable function, to clear+hide and show accordingly. 
         {
             _count = 0;
             TotalFileSizeNumberLabel.Text = "";
