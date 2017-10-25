@@ -22,6 +22,7 @@ namespace OsuDeleter1
 
         private string _osuDirectory;
         private DialogResult _dialogResult;
+        private bool _isOsuDir = false;
 
         public void directoryButton_Click(object sender, EventArgs e)
         {
@@ -29,6 +30,7 @@ namespace OsuDeleter1
             if (Directory.Exists(folderBrowserDialog1.SelectedPath))
                 if (folderBrowserDialog1.SelectedPath.Contains("osu"))
                 {
+                    _isOsuDir = true;
                     if (folderBrowserDialog1.SelectedPath.Contains("\\Songs"))
                         _osuDirectory = folderBrowserDialog1.SelectedPath;
                     else
@@ -145,18 +147,32 @@ namespace OsuDeleter1
             }
         }
 
-
+        private DialogResult _dialogResult2;
 
         private void DeleteFilesButton_Click(object sender, EventArgs e)
         {
-            _dialogResult = _dialogResult =
-                MessageBox.Show($"Are you sure you want to delete {FileList.Count()} file(s)?", "",
-                    MessageBoxButtons.YesNo);
+            _dialogResult = MessageBox.Show($"Are you sure you want to delete {FileList.Count()} file(s)?", "", MessageBoxButtons.YesNo);
             if (_dialogResult == DialogResult.Yes)
             {
-                FileDeleter.DeleteFiles(FileList);
-                MessageBox.Show($"{_count} files has been deleted.");
-                ClearLabels();
+                if (_isOsuDir)
+                {
+                    FileDeleter.DeleteFiles(FileList);
+                    MessageBox.Show($"{_count} files has been deleted.");
+                    ClearLabels();
+                }
+                else
+                {
+                    _dialogResult2 =
+                        MessageBox.Show(
+                            $"Warning - Path does NOT contain 'Osu'. The full path is {_osuDirectory}. This will delete files your files. Proceed with deletion?",
+                            "Warning - potential incorrect path", MessageBoxButtons.OKCancel);
+                    if (_dialogResult2 == DialogResult.OK)
+                    {
+                        FileDeleter.DeleteFiles(FileList);
+                        MessageBox.Show($"{_count} files has been deleted.");
+                        ClearLabels();
+                    }
+                }
             }
         }
 
