@@ -98,26 +98,18 @@ namespace OsuDeleter1
 
         private Task ScanFilesTask()
         {
-            var t = Task.Run(ScanFilesTask);
             FileList.Clear();
-            try
-            {
-                if (_jpgFilesChecked)
-                    FileParser.ParseFiles(_osuDirectory, "*.jpg");
-                if (_pngFilesChecked)
-                    FileParser.ParseFiles(_osuDirectory, "*.png");
-                if (_wavFilesChecked)
-                    FileParser.ParseFiles(_osuDirectory, "*.wav");
-                if (_aviFilesChecked)
-                    FileParser.ParseFiles(_osuDirectory, ".avi");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(
-                    "Error - Access denied. Try running the program as administrator (certain system directories will always deny access, e.g. recycle bin)");
-                throw;
-            }
-            return t;
+                return Task.Run(() =>
+                {
+                    if (_jpgFilesChecked)
+                        FileParser.ParseFiles(_osuDirectory, "*.jpg");
+                    if (_pngFilesChecked)
+                        FileParser.ParseFiles(_osuDirectory, "*.png");
+                    if (_wavFilesChecked)
+                        FileParser.ParseFiles(_osuDirectory, "*.wav");
+                    if (_aviFilesChecked)
+                        FileParser.ParseFiles(_osuDirectory, ".avi");
+                });
         }
 
 
@@ -126,7 +118,9 @@ namespace OsuDeleter1
             if (_osuDirectory == null)
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
             else
+            {
                 await ScanFilesTask();
+            }
             if (FileList.Count == 0 && _osuDirectory != null)
             {
                 MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
