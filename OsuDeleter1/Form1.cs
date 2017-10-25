@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 using Humanizer;
+using OsuDeleter;
 
 
 namespace OsuDeleter1
@@ -90,7 +91,7 @@ namespace OsuDeleter1
         private bool CheckboxesActive => jpgFilesTickBox.Checked || pngFilesCheckBox.Checked ||
                                          wavFilesCheckBox.Checked || aviFilesCheckBox.Checked;
 
-        private readonly List<string> _fileList = new List<string>();
+        public List<string> _fileList = new List<string>();
 
         private double count;
 
@@ -100,11 +101,14 @@ namespace OsuDeleter1
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
             if (_osuDirectory != null)
             {
-                _fileList.Clear();
+                _fileList.Clear(); 
                 try
                 {
                     if (_jpgFilesChecked)
-                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
+                    {
+                        FileParser fp = new FileParser();
+                        //_fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
+                    }
                     if (_pngFilesChecked)
                         _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
                     if (_wavFilesChecked)
