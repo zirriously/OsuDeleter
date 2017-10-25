@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace OsuDeleter1
 {
-    public class FileParser
+    public static class FileParser
     {
-        private List<string> _foundFilesList = new List<string>();
-
-        public void ParseFiles(string dir, string extension)
+        public static void ParseFiles(string dir, string extension)
         {
-            _foundFilesList.AddRange(Directory.GetFiles(dir, extension, SearchOption.AllDirectories));
+            Form1.FileList.AddRange(Directory.GetFiles(dir, extension, SearchOption.AllDirectories));
         }
         
     }
