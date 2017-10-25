@@ -15,7 +15,6 @@ namespace OsuDeleter1
         {
             _foundFilesList.AddRange(Directory.GetFiles(dir, extension, SearchOption.AllDirectories));
         }
-
         
     }
 }

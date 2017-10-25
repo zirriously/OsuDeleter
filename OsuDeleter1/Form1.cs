@@ -105,10 +105,7 @@ namespace OsuDeleter1
                 try
                 {
                     if (_jpgFilesChecked)
-                    {
-                        FileParser fp = new FileParser();
-                        //_fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
-                    }
+                        _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.jpg", SearchOption.AllDirectories));
                     if (_pngFilesChecked)
                         _fileList.AddRange(Directory.GetFiles(_osuDirectory, "*.png", SearchOption.AllDirectories));
                     if (_wavFilesChecked)
