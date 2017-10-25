@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Humanizer;
 using OsuDeleter;
@@ -97,58 +98,58 @@ namespace OsuDeleter1
 
         private double _count;
 
-        private void BeginScanButton_Click(object sender, EventArgs e)
+        private Task ScanFilesTask()
+        {
+            FileList.Clear();
+                return Task.Run(() =>
+                {
+                    if (_jpgFilesChecked)
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".jpg", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, "*.jpg");
+                    if (_pngFilesChecked)
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".png", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, "*.png");
+                    if (_wavFilesChecked)
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".wav", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, "*.wav");
+                    if (_aviFilesChecked)
+                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".avi", SearchOption.AllDirectories));
+                    //FileParser.ParseFiles(_osuDirectory, ".avi");
+                });
+        }
+
+
+        private async void BeginScanButton_Click(object sender, EventArgs e)
         {
             if (_osuDirectory == null)
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
             else
             {
-                FileList.Clear(); 
-                try
+                await ScanFilesTask();
+            }
+            if (FileList.Count == 0 && _osuDirectory != null)
+            {
+                MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
+            }
+            else if (_osuDirectory != null)
+            {
+                _count = FileList.Count;
+                amountOfFilesFoundNumberLabel.Text = _count.ToString();
+                DeleteFilesButton.Enabled = true;
+                AmountOfFilesTextLabel.Enabled = true;
+                amountOfFilesFoundNumberLabel.Show();
+                TotalFileSizeNumberLabel.Show();
+                // Get total size of all files and show next to total amount of files
+                TotalFileSize.Enabled = true;
+                double totalSize = 0;
+                foreach (var value in FileList)
                 {
-                    if (_jpgFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.jpg");
-                    if (_pngFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.png");
-                    if (_wavFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, "*.wav");
-                    if (_aviFilesChecked)
-                        FileParser.ParseFiles(_osuDirectory, ".avi");
+                    var fileInfo = new FileInfo(value);
+                    totalSize += fileInfo.Length;
                 }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error - Access denied. Try running the program as administrator (certain system directories will always deny access, e.g. recycle bin)");
-                    return;
-                }
-                if (FileList.Count == 0)
-                {
-                    MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
-                }
-                else
-                {
-                    
-                    //Buttons and labels
-                    _count = FileList.Count;
-                    amountOfFilesFoundNumberLabel.Text = _count.ToString();
-                    DeleteFilesButton.Enabled = true;
-                    AmountOfFilesTextLabel.Enabled = true;
-                    amountOfFilesFoundNumberLabel.Show();
-                    TotalFileSizeNumberLabel.Show();
-                    TotalFileSize.Enabled = true;
-                    clearFilesButton.Enabled = true;
-
-                    // Get total size of all files and show next to total amount of files
-                    double totalSize = 0;
-                    foreach (var value in FileList)
-                    {
-                        FileInfo fileInfo = new FileInfo(value);
-                        totalSize += fileInfo.Length;
-                    }
-
-                    // Humanising size
-                    var totalSizeHumanized = totalSize.Bytes();
-                    TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
-                }
+                var totalSizeHumanized = totalSize.Bytes();
+                TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
+                clearFilesButton.Enabled = true;
             }
         }
 
