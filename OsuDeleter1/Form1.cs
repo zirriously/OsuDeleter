@@ -97,11 +97,6 @@ namespace OsuDeleter1
 
         private void BeginScanButton_Click(object sender, EventArgs e)
         {
-
-
-
-
-
             if (_osuDirectory == null)
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
             else
