@@ -27,6 +27,7 @@ namespace OsuDeleter1
 
         public void directoryButton_Click(object sender, EventArgs e)
         {
+            _accessDeniedException = false;
             folderBrowserDialog1.ShowDialog();
             if (Directory.Exists(folderBrowserDialog1.SelectedPath))
                 if (folderBrowserDialog1.SelectedPath.Contains("osu"))
@@ -98,23 +99,34 @@ namespace OsuDeleter1
 
         private double _count;
 
+        private bool _accessDeniedException = false;
+
         private Task ScanFilesTask()
         {
             FileList.Clear();
                 return Task.Run(() =>
                 {
-                    if (_jpgFilesChecked)
-                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".jpg", SearchOption.AllDirectories));
-                    //FileParser.ParseFiles(_osuDirectory, "*.jpg");
-                    if (_pngFilesChecked)
-                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".png", SearchOption.AllDirectories));
-                    //FileParser.ParseFiles(_osuDirectory, "*.png");
-                    if (_wavFilesChecked)
-                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".wav", SearchOption.AllDirectories));
-                    //FileParser.ParseFiles(_osuDirectory, "*.wav");
-                    if (_aviFilesChecked)
-                        FileList.AddRange(Directory.GetFiles(_osuDirectory, ".avi", SearchOption.AllDirectories));
-                    //FileParser.ParseFiles(_osuDirectory, ".avi");
+                    try
+                    {
+                        if (_jpgFilesChecked)
+                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".jpg", SearchOption.AllDirectories));
+                        //FileParser.ParseFiles(_osuDirectory, "*.jpg");
+                        if (_pngFilesChecked)
+                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".png", SearchOption.AllDirectories));
+                        //FileParser.ParseFiles(_osuDirectory, "*.png");
+                        if (_wavFilesChecked)
+                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".wav", SearchOption.AllDirectories));
+                        //FileParser.ParseFiles(_osuDirectory, "*.wav");
+                        if (_aviFilesChecked)
+                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".avi", SearchOption.AllDirectories));
+                        //FileParser.ParseFiles(_osuDirectory, ".avi");
+                    }
+                    catch (Exception)
+                    {
+                        _accessDeniedException = true;
+                        MessageBox.Show("Access denied. Try running the program as administrator.");
+                        return;
+                    }
                 });
         }
 
@@ -127,11 +139,11 @@ namespace OsuDeleter1
             {
                 await ScanFilesTask();
             }
-            if (FileList.Count == 0 && _osuDirectory != null)
+            if (FileList.Count == 0 && _osuDirectory != null && _accessDeniedException == false)
             {
                 MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
             }
-            else if (_osuDirectory != null)
+            else if (_osuDirectory != null && _accessDeniedException == false)
             {
                 _count = FileList.Count;
                 amountOfFilesFoundNumberLabel.Text = _count.ToString();
