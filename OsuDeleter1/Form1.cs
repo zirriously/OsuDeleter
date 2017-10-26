@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Humanizer;
-using OsuDeleter;
-
 
 namespace OsuDeleter1
 {
@@ -23,7 +21,7 @@ namespace OsuDeleter1
 
         private string _osuDirectory;
         private DialogResult _dialogResult;
-        private bool _isOsuDir = false;
+        private bool _isOsuDir;
 
         public void directoryButton_Click(object sender, EventArgs e)
         {
@@ -95,39 +93,35 @@ namespace OsuDeleter1
         private bool CheckboxesActive => jpgFilesTickBox.Checked || pngFilesCheckBox.Checked ||
                                          wavFilesCheckBox.Checked || aviFilesCheckBox.Checked;
 
-        public static List<string> FileList = new List<string>();
+        private readonly List<string> FileList = new List<string>();
 
         private double _count;
 
-        private bool _accessDeniedException = false;
+        private bool _accessDeniedException;
 
         private Task ScanFilesTask()
         {
-            FileList.Clear();
-                return Task.Run(() =>
+            List<string> tempList = new List<string>();
+            return Task.Run(() =>
+            {
+                try
                 {
-                    try
-                    {
-                        if (_jpgFilesChecked)
-                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".jpg", SearchOption.AllDirectories));
-                        //FileParser.ParseFiles(_osuDirectory, "*.jpg");
-                        if (_pngFilesChecked)
-                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".png", SearchOption.AllDirectories));
-                        //FileParser.ParseFiles(_osuDirectory, "*.png");
-                        if (_wavFilesChecked)
-                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".wav", SearchOption.AllDirectories));
-                        //FileParser.ParseFiles(_osuDirectory, "*.wav");
-                        if (_aviFilesChecked)
-                            FileList.AddRange(Directory.GetFiles(_osuDirectory, ".avi", SearchOption.AllDirectories));
-                        //FileParser.ParseFiles(_osuDirectory, ".avi");
-                    }
-                    catch (Exception)
-                    {
-                        _accessDeniedException = true;
-                        MessageBox.Show("Access denied. Try running the program as administrator.");
-                        return;
-                    }
-                });
+                    if (_jpgFilesChecked)
+                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".jpg", SearchOption.AllDirectories));
+                    if (_pngFilesChecked)
+                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".png", SearchOption.AllDirectories));
+                    if (_wavFilesChecked)
+                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".wav", SearchOption.AllDirectories));
+                    if (_aviFilesChecked)
+                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".avi", SearchOption.AllDirectories));
+                }
+                catch (Exception)
+                {
+                    _accessDeniedException = true;
+                    MessageBox.Show("Access denied. Try running the program as administrator.");
+                }
+                FileList.AddRange(tempList);
+            });
         }
 
 
@@ -136,9 +130,7 @@ namespace OsuDeleter1
             if (_osuDirectory == null)
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
             else
-            {
                 await ScanFilesTask();
-            }
             if (FileList.Count == 0 && _osuDirectory != null && _accessDeniedException == false)
             {
                 MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
@@ -169,14 +161,14 @@ namespace OsuDeleter1
 
         private void DeleteFilesButton_Click(object sender, EventArgs e)
         {
-            _dialogResult = MessageBox.Show($"Are you sure you want to delete {FileList.Count()} file(s)?", "", MessageBoxButtons.YesNo);
+            _dialogResult = MessageBox.Show($"Are you sure you want to delete {FileList.Count()} file(s)?", "",
+                MessageBoxButtons.YesNo);
             if (_dialogResult == DialogResult.Yes)
-            {
                 if (_isOsuDir)
                 {
                     FileDeleter.DeleteFiles(FileList);
                     MessageBox.Show($"{_count} files has been deleted.");
-                    ClearLabels();
+                    ToggleLabels(false);
                 }
                 else
                 {
@@ -188,32 +180,40 @@ namespace OsuDeleter1
                     {
                         FileDeleter.DeleteFiles(FileList);
                         MessageBox.Show($"{_count} files has been deleted.");
-                        ClearLabels();
+                        ToggleLabels(false);
                     }
                 }
-            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
         }
 
-        private void ClearLabels() // Should make this a toggleable function, to clear+hide and show accordingly. 
+        private void
+            ToggleLabels(bool visible) // Should make this a toggleable function, to clear+hide and show accordingly. 
         {
-            _count = 0;
-            TotalFileSizeNumberLabel.Text = "";
-            amountOfFilesFoundNumberLabel.Text = "";
-            AmountOfFilesTextLabel.Enabled = false;
-            TotalFileSize.Enabled = false;
-            TotalFileSizeNumberLabel.Hide();
-            amountOfFilesFoundNumberLabel.Hide();
-            DeleteFilesButton.Enabled = false;
-            FileList.Clear();
+            if (visible)
+            {
+            }
+            else
+            {
+                _count = 0;
+                TotalFileSizeNumberLabel.Text = "";
+                amountOfFilesFoundNumberLabel.Text = "";
+                AmountOfFilesTextLabel.Enabled = false;
+                TotalFileSize.Enabled = false;
+                TotalFileSizeNumberLabel.Hide();
+                amountOfFilesFoundNumberLabel.Hide();
+                DeleteFilesButton.Enabled = false;
+                FileList.Clear();
+                loadingCircle1.Visible = false;
+                _accessDeniedException = false;
+            }
         }
 
         private void clearFilesButton_Click(object sender, EventArgs e)
         {
-            ClearLabels();
+            ToggleLabels(false);
         }
     }
 }
