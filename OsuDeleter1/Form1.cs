@@ -111,7 +111,7 @@ namespace OsuDeleter1
         private bool _accessDeniedException;
 
 
-        private void EnableBoxes(Boolean isVisible)
+        private void EnableBoxes(bool isVisible)
         {
             if (isVisible)
             {
@@ -138,6 +138,7 @@ namespace OsuDeleter1
             FileList.Clear();
             EnableBoxes(true);
             BeginScanButton.Enabled = false;
+            ScanningLabel.Visible = true;
 
             Task.Run(() =>
                 {
@@ -167,6 +168,7 @@ namespace OsuDeleter1
                     {
                         EnableBoxes(true);
                         loadingCircle1.Visible = false;
+                        ScanningLabel.Visible = false;
                         BeginScanButton.Enabled = true;
                     }
                     else
@@ -174,6 +176,7 @@ namespace OsuDeleter1
                     FileList.AddRange(task.Result);
                     BeginScanButton.Enabled = true;
                     loadingCircle1.Visible = false;
+                    ScanningLabel.Visible = false;
 
                     // Error checking - 0 files, etc
 
