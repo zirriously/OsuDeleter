@@ -113,19 +113,40 @@ namespace OsuDeleter1
 
             Task.Run(() =>
                 {
+                    
                     var result = new List<string>();
                     FileParser FileParser = new FileParser();
                     if (_jpgFilesChecked)
-                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.jpg"));
-                    if (_pngFilesChecked)
-                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.png"));
-                    if (_wavFilesChecked)
-                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.wav"));
-                    if (_aviFilesChecked)
-                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.avi"));
+                        try
+                        {
+                            result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.jpg"));
+                            if (_pngFilesChecked)
+                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.png"));
+                            if (_wavFilesChecked)
+                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.wav"));
+                            if (_aviFilesChecked)
+                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.avi"));
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Access denied. Try running as administrator.");
+                            return null;
+                        }
                     return result;
                 })
                 .ContinueWith((task) => {
+                    if (task.Result == null)
+                    {
+                        directoryButton.Enabled = true;
+                        jpgFilesTickBox.Enabled = true;
+                        pngFilesCheckBox.Enabled = true;
+                        aviFilesCheckBox.Enabled = true;
+                        wavFilesCheckBox.Enabled = true;
+                        BeginScanButton.Enabled = true;
+                        loadingCircle1.Visible = false;
+                    }
+                    else
+                    { 
                     FileList.AddRange(task.Result);
                     BeginScanButton.Enabled = true;
                     loadingCircle1.Visible = false;
@@ -137,34 +158,34 @@ namespace OsuDeleter1
                         MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
                     }
                     else if (_osuDirectory != null && _accessDeniedException == false)
-                    {
-
-                        _count = FileList.Count;
-                        amountOfFilesFoundNumberLabel.Text = _count.ToString();
-                        DeleteFilesButton.Enabled = true;
-                        AmountOfFilesTextLabel.Enabled = true;
-                        amountOfFilesFoundNumberLabel.Show();
-                        TotalFileSizeNumberLabel.Show();
-
-                        // Get total size of all files and show next to total amount of files
-
-                        TotalFileSize.Enabled = true;
-                        double totalSize = 0;
-                        foreach (var value in FileList)
                         {
-                            var fileInfo = new FileInfo(value);
-                            totalSize += fileInfo.Length;
-                        }
-                        var totalSizeHumanized = totalSize.Bytes();
-                        TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
-                        clearFilesButton.Enabled = true;
-                        DeleteFilesButton.Enabled = true;
-                        directoryButton.Enabled = true;
-                        jpgFilesTickBox.Enabled = true;
-                        pngFilesCheckBox.Enabled = true;
-                        aviFilesCheckBox.Enabled = true;
-                        wavFilesCheckBox.Enabled = true;
 
+                            _count = FileList.Count;
+                            amountOfFilesFoundNumberLabel.Text = _count.ToString();
+                            DeleteFilesButton.Enabled = true;
+                            AmountOfFilesTextLabel.Enabled = true;
+                            amountOfFilesFoundNumberLabel.Show();
+                            TotalFileSizeNumberLabel.Show();
+
+                            // Get total size of all files and show next to total amount of files
+
+                            TotalFileSize.Enabled = true;
+                            double totalSize = 0;
+                            foreach (var value in FileList)
+                            {
+                                var fileInfo = new FileInfo(value);
+                                totalSize += fileInfo.Length;
+                            }
+                            var totalSizeHumanized = totalSize.Bytes();
+                            TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
+                            clearFilesButton.Enabled = true;
+                            DeleteFilesButton.Enabled = true;
+                            directoryButton.Enabled = true;
+                            jpgFilesTickBox.Enabled = true;
+                            pngFilesCheckBox.Enabled = true;
+                            aviFilesCheckBox.Enabled = true;
+                            wavFilesCheckBox.Enabled = true;
+                        }
                     }
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
