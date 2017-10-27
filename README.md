@@ -1,4 +1,4 @@
-![](https://i.imgur.com/ejOrrWd.png)
+![](https://i.imgur.com/zMOUxQQ.png)
 
 Deletes file extensions you choose from the Osu directory.
 
