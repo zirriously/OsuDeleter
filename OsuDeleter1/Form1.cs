@@ -25,6 +25,8 @@ namespace OsuDeleter1
 
         public void directoryButton_Click(object sender, EventArgs e)
         {
+            BeginScanButton.Enabled = CheckboxesActive;
+            ToggleLabels(false);
             _accessDeniedException = false;
             folderBrowserDialog1.ShowDialog();
             if (Directory.Exists(folderBrowserDialog1.SelectedPath))
@@ -43,8 +45,6 @@ namespace OsuDeleter1
                         "Incorrect path", MessageBoxButtons.YesNo);
                     if (_dialogResult == DialogResult.Yes)
                         _osuDirectory = folderBrowserDialog1.SelectedPath;
-                    if (_dialogResult == DialogResult.No)
-                        MessageBox.Show("Please pick another directory.");
                 }
             else
                 MessageBox.Show("The path selected does not exist.");
@@ -101,8 +101,16 @@ namespace OsuDeleter1
 
         private void ScanFilesInParallel()
         {
+            clearFilesButton.Enabled = false;
             loadingCircle1.Visible = true;
+            DeleteFilesButton.Enabled = false;
             FileList.Clear();
+            directoryButton.Enabled = false;
+            jpgFilesTickBox.Enabled = false;
+            pngFilesCheckBox.Enabled = false;
+            aviFilesCheckBox.Enabled = false;
+            wavFilesCheckBox.Enabled = false;
+
             Task.Run(() =>
                 {
                     var result = new List<string>();
@@ -114,13 +122,51 @@ namespace OsuDeleter1
                     if (_wavFilesChecked)
                         result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.wav"));
                     if (_aviFilesChecked)
-                        result.AddRange(FileParser.ParseFiles(_osuDirectory, ".avi"));
+                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.avi"));
                     return result;
                 })
                 .ContinueWith((task) => {
                     FileList.AddRange(task.Result);
                     BeginScanButton.Enabled = true;
                     loadingCircle1.Visible = false;
+
+                    // Error checking - 0 files, etc
+
+                    if (FileList.Count == 0 && _osuDirectory != null && _accessDeniedException == false)
+                    {
+                        MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
+                    }
+                    else if (_osuDirectory != null && _accessDeniedException == false)
+                    {
+
+                        _count = FileList.Count;
+                        amountOfFilesFoundNumberLabel.Text = _count.ToString();
+                        DeleteFilesButton.Enabled = true;
+                        AmountOfFilesTextLabel.Enabled = true;
+                        amountOfFilesFoundNumberLabel.Show();
+                        TotalFileSizeNumberLabel.Show();
+
+                        // Get total size of all files and show next to total amount of files
+
+                        TotalFileSize.Enabled = true;
+                        double totalSize = 0;
+                        foreach (var value in FileList)
+                        {
+                            var fileInfo = new FileInfo(value);
+                            totalSize += fileInfo.Length;
+                        }
+                        var totalSizeHumanized = totalSize.Bytes();
+                        TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
+                        clearFilesButton.Enabled = true;
+                        DeleteFilesButton.Enabled = true;
+                        directoryButton.Enabled = true;
+                        jpgFilesTickBox.Enabled = true;
+                        pngFilesCheckBox.Enabled = true;
+                        aviFilesCheckBox.Enabled = true;
+                        wavFilesCheckBox.Enabled = true;
+
+                    }
+
                 }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -136,30 +182,6 @@ namespace OsuDeleter1
             else
             {
                 ScanFilesInParallel();
-            }
-            if (FileList.Count == 0 && _osuDirectory != null && _accessDeniedException == false)
-            {
-                MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
-            }
-            else if (_osuDirectory != null && _accessDeniedException == false)
-            {
-                _count = FileList.Count;
-                amountOfFilesFoundNumberLabel.Text = _count.ToString();
-                DeleteFilesButton.Enabled = true;
-                AmountOfFilesTextLabel.Enabled = true;
-                amountOfFilesFoundNumberLabel.Show();
-                TotalFileSizeNumberLabel.Show();
-                // Get total size of all files and show next to total amount of files
-                TotalFileSize.Enabled = true;
-                double totalSize = 0;
-                foreach (var value in FileList)
-                {
-                    var fileInfo = new FileInfo(value);
-                    totalSize += fileInfo.Length;
-                }
-                var totalSizeHumanized = totalSize.Bytes();
-                TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
-                clearFilesButton.Enabled = true;
             }
         }
 
