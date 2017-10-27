@@ -99,38 +99,44 @@ namespace OsuDeleter1
 
         private bool _accessDeniedException;
 
-        private Task ScanFilesTask()
+        private void ScanFilesInParallel()
         {
-            List<string> tempList = new List<string>();
-            return Task.Run(() =>
-            {
-                try
+            loadingCircle1.Visible = true;
+            FileList.Clear();
+            Task.Run(() =>
                 {
+                    var result = new List<string>();
+                    FileParser FileParser = new FileParser();
                     if (_jpgFilesChecked)
-                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".jpg", SearchOption.AllDirectories));
+                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.jpg"));
                     if (_pngFilesChecked)
-                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".png", SearchOption.AllDirectories));
+                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.png"));
                     if (_wavFilesChecked)
-                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".wav", SearchOption.AllDirectories));
+                        result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.wav"));
                     if (_aviFilesChecked)
-                        tempList.AddRange(Directory.GetFiles(_osuDirectory, ".avi", SearchOption.AllDirectories));
-                }
-                catch (Exception)
-                {
-                    _accessDeniedException = true;
-                    MessageBox.Show("Access denied. Try running the program as administrator.");
-                }
-                FileList.AddRange(tempList);
-            });
+                        result.AddRange(FileParser.ParseFiles(_osuDirectory, ".avi"));
+                    return result;
+                })
+                .ContinueWith((task) => {
+                    FileList.AddRange(task.Result);
+                    BeginScanButton.Enabled = true;
+                    loadingCircle1.Visible = false;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
 
-        private async void BeginScanButton_Click(object sender, EventArgs e)
+        private void BeginScanButton_Click(object sender, EventArgs e)
         {
+            BeginScanButton.Enabled = false;
             if (_osuDirectory == null)
+            {
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
+                BeginScanButton.Enabled = false;
+            }
             else
-                await ScanFilesTask();
+            {
+                ScanFilesInParallel();
+            }
             if (FileList.Count == 0 && _osuDirectory != null && _accessDeniedException == false)
             {
                 MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
@@ -189,8 +195,7 @@ namespace OsuDeleter1
         {
         }
 
-        private void
-            ToggleLabels(bool visible) // Should make this a toggleable function, to clear+hide and show accordingly. 
+        private void ToggleLabels(bool visible) // Should make this a toggleable function, to clear+hide and show accordingly. 
         {
             if (visible)
             {
