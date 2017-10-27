@@ -46,17 +46,19 @@
             this.TotalFileSizeNumberLabel = new System.Windows.Forms.Label();
             this.clearFilesButton = new System.Windows.Forms.Button();
             this.loadingCircle1 = new MRG.Controls.UI.LoadingCircle();
+            this.ScanningLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // directoryTextBox
             // 
+            this.directoryTextBox.Enabled = false;
             this.directoryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.directoryTextBox.Location = new System.Drawing.Point(34, 12);
             this.directoryTextBox.Name = "directoryTextBox";
             this.directoryTextBox.ReadOnly = true;
             this.directoryTextBox.Size = new System.Drawing.Size(400, 20);
             this.directoryTextBox.TabIndex = 1;
-            this.directoryTextBox.Text = "Pick Osu! directory";
+            this.directoryTextBox.Text = "Choose Osu! directory";
             this.directoryTextBox.TextChanged += new System.EventHandler(this.directoryTextBox_TextChanged);
             // 
             // directoryButton
@@ -202,7 +204,7 @@
             this.loadingCircle1.Active = true;
             this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
             this.loadingCircle1.InnerCircleRadius = 8;
-            this.loadingCircle1.Location = new System.Drawing.Point(208, 92);
+            this.loadingCircle1.Location = new System.Drawing.Point(257, 92);
             this.loadingCircle1.Name = "loadingCircle1";
             this.loadingCircle1.NumberSpoke = 24;
             this.loadingCircle1.OuterCircleRadius = 9;
@@ -214,12 +216,23 @@
             this.loadingCircle1.Text = "loadingCircle";
             this.loadingCircle1.Visible = false;
             // 
+            // ScanningLabel
+            // 
+            this.ScanningLabel.AutoSize = true;
+            this.ScanningLabel.Location = new System.Drawing.Point(208, 97);
+            this.ScanningLabel.Name = "ScanningLabel";
+            this.ScanningLabel.Size = new System.Drawing.Size(52, 13);
+            this.ScanningLabel.TabIndex = 17;
+            this.ScanningLabel.Text = "Scanning";
+            this.ScanningLabel.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(445, 120);
+            this.Controls.Add(this.ScanningLabel);
             this.Controls.Add(this.loadingCircle1);
             this.Controls.Add(this.clearFilesButton);
             this.Controls.Add(this.TotalFileSizeNumberLabel);
@@ -265,6 +278,7 @@
         private System.Windows.Forms.Label TotalFileSizeNumberLabel;
         private System.Windows.Forms.Button clearFilesButton;
         private MRG.Controls.UI.LoadingCircle loadingCircle1;
+        private System.Windows.Forms.Label ScanningLabel;
     }
 }
 

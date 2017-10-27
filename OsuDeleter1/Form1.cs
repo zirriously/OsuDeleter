@@ -37,6 +37,7 @@ namespace OsuDeleter1
                         _osuDirectory = folderBrowserDialog1.SelectedPath;
                     else
                         _osuDirectory = folderBrowserDialog1.SelectedPath + "\\Songs";
+                    directoryTextBox.Text = _osuDirectory;
                 }
                 else
                 {
@@ -44,17 +45,27 @@ namespace OsuDeleter1
                         $"It looks like you didn't choose the Osu! directory. The directory you have selected is {folderBrowserDialog1.SelectedPath}. \nAre you sure you want to use this directory?",
                         "Incorrect path", MessageBoxButtons.YesNo);
                     if (_dialogResult == DialogResult.Yes)
+                    {
                         _osuDirectory = folderBrowserDialog1.SelectedPath;
+                        directoryTextBox.Text = _osuDirectory;
+                    }
+                    else
+                    {
+                        directoryTextBox.Text = "Choose Osu! directory";
+                    }
                 }
             else
+            {
                 MessageBox.Show("The path selected does not exist.");
-            directoryTextBox.Text = _osuDirectory;
+                directoryTextBox.Text = "Choose Osu! directory";
+            }
         }
 
         private void directoryTextBox_TextChanged(object sender, EventArgs e)
         {
             //_osuDirectory = directoryTextBox.ToString();
         }
+
 
 
         private bool _jpgFilesChecked;
@@ -99,17 +110,34 @@ namespace OsuDeleter1
 
         private bool _accessDeniedException;
 
+
+        private void EnableBoxes(Boolean isVisible)
+        {
+            if (isVisible)
+            {
+                directoryButton.Enabled = true;
+                jpgFilesTickBox.Enabled = true;
+                pngFilesCheckBox.Enabled = true;
+                aviFilesCheckBox.Enabled = true;
+                wavFilesCheckBox.Enabled = true;
+            }
+            else
+            {
+                directoryButton.Enabled = false;
+                jpgFilesTickBox.Enabled = false;
+                pngFilesCheckBox.Enabled = false;
+                aviFilesCheckBox.Enabled = false;
+                wavFilesCheckBox.Enabled = false;
+            }
+        }
         private void ScanFilesInParallel()
         {
             clearFilesButton.Enabled = false;
             loadingCircle1.Visible = true;
             DeleteFilesButton.Enabled = false;
             FileList.Clear();
-            directoryButton.Enabled = false;
-            jpgFilesTickBox.Enabled = false;
-            pngFilesCheckBox.Enabled = false;
-            aviFilesCheckBox.Enabled = false;
-            wavFilesCheckBox.Enabled = false;
+            EnableBoxes(true);
+            BeginScanButton.Enabled = false;
 
             Task.Run(() =>
                 {
@@ -137,13 +165,9 @@ namespace OsuDeleter1
                 .ContinueWith((task) => {
                     if (task.Result == null)
                     {
-                        directoryButton.Enabled = true;
-                        jpgFilesTickBox.Enabled = true;
-                        pngFilesCheckBox.Enabled = true;
-                        aviFilesCheckBox.Enabled = true;
-                        wavFilesCheckBox.Enabled = true;
-                        BeginScanButton.Enabled = true;
+                        EnableBoxes(true);
                         loadingCircle1.Visible = false;
+                        BeginScanButton.Enabled = true;
                     }
                     else
                     { 
@@ -156,6 +180,7 @@ namespace OsuDeleter1
                     if (FileList.Count == 0 && _osuDirectory != null && _accessDeniedException == false)
                     {
                         MessageBox.Show("No files have been found. Did you choose the correct directory for Osu?");
+                        EnableBoxes(true);
                     }
                     else if (_osuDirectory != null && _accessDeniedException == false)
                         {
@@ -166,6 +191,7 @@ namespace OsuDeleter1
                             AmountOfFilesTextLabel.Enabled = true;
                             amountOfFilesFoundNumberLabel.Show();
                             TotalFileSizeNumberLabel.Show();
+                            BeginScanButton.Enabled = true;
 
                             // Get total size of all files and show next to total amount of files
 
@@ -180,11 +206,7 @@ namespace OsuDeleter1
                             TotalFileSizeNumberLabel.Text = totalSizeHumanized.Humanize("#.##");
                             clearFilesButton.Enabled = true;
                             DeleteFilesButton.Enabled = true;
-                            directoryButton.Enabled = true;
-                            jpgFilesTickBox.Enabled = true;
-                            pngFilesCheckBox.Enabled = true;
-                            aviFilesCheckBox.Enabled = true;
-                            wavFilesCheckBox.Enabled = true;
+                            EnableBoxes(true);
                         }
                     }
 
@@ -194,14 +216,14 @@ namespace OsuDeleter1
 
         private void BeginScanButton_Click(object sender, EventArgs e)
         {
-            BeginScanButton.Enabled = false;
             if (_osuDirectory == null)
             {
                 MessageBox.Show("You have not chosen an Osu! directory yet.");
-                BeginScanButton.Enabled = false;
             }
             else
             {
+                TotalFileSizeNumberLabel.Visible = false;
+                amountOfFilesFoundNumberLabel.Visible = false;
                 ScanFilesInParallel();
             }
         }
@@ -238,7 +260,7 @@ namespace OsuDeleter1
         {
         }
 
-        private void ToggleLabels(bool visible) // Should make this a toggleable function, to clear+hide and show accordingly. 
+        private void ToggleLabels(bool visible)
         {
             if (visible)
             {
@@ -262,6 +284,8 @@ namespace OsuDeleter1
         private void clearFilesButton_Click(object sender, EventArgs e)
         {
             ToggleLabels(false);
+            _osuDirectory = null;
+            directoryTextBox.Text = "Choose Osu! directory";
         }
     }
 }
