@@ -144,14 +144,14 @@
             this.AmountOfFilesTextLabel.Enabled = false;
             this.AmountOfFilesTextLabel.Location = new System.Drawing.Point(204, 56);
             this.AmountOfFilesTextLabel.Name = "AmountOfFilesTextLabel";
-            this.AmountOfFilesTextLabel.Size = new System.Drawing.Size(109, 13);
+            this.AmountOfFilesTextLabel.Size = new System.Drawing.Size(61, 13);
             this.AmountOfFilesTextLabel.TabIndex = 10;
-            this.AmountOfFilesTextLabel.Text = "Amount of files found:";
+            this.AmountOfFilesTextLabel.Text = "Files found:";
             // 
             // amountOfFilesFoundNumberLabel
             // 
             this.amountOfFilesFoundNumberLabel.AutoSize = true;
-            this.amountOfFilesFoundNumberLabel.Location = new System.Drawing.Point(311, 56);
+            this.amountOfFilesFoundNumberLabel.Location = new System.Drawing.Point(261, 56);
             this.amountOfFilesFoundNumberLabel.Name = "amountOfFilesFoundNumberLabel";
             this.amountOfFilesFoundNumberLabel.Size = new System.Drawing.Size(13, 13);
             this.amountOfFilesFoundNumberLabel.TabIndex = 11;
@@ -176,14 +176,14 @@
             this.TotalFileSize.Enabled = false;
             this.TotalFileSize.Location = new System.Drawing.Point(204, 72);
             this.TotalFileSize.Name = "TotalFileSize";
-            this.TotalFileSize.Size = new System.Drawing.Size(88, 13);
+            this.TotalFileSize.Size = new System.Drawing.Size(63, 13);
             this.TotalFileSize.TabIndex = 13;
-            this.TotalFileSize.Text = "Total size of files:";
+            this.TotalFileSize.Text = "Size of files:";
             // 
             // TotalFileSizeNumberLabel
             // 
             this.TotalFileSizeNumberLabel.AutoSize = true;
-            this.TotalFileSizeNumberLabel.Location = new System.Drawing.Point(288, 72);
+            this.TotalFileSizeNumberLabel.Location = new System.Drawing.Point(261, 72);
             this.TotalFileSizeNumberLabel.Name = "TotalFileSizeNumberLabel";
             this.TotalFileSizeNumberLabel.Size = new System.Drawing.Size(13, 13);
             this.TotalFileSizeNumberLabel.TabIndex = 14;
@@ -204,7 +204,7 @@
             this.loadingCircle1.Active = true;
             this.loadingCircle1.Color = System.Drawing.Color.DarkGray;
             this.loadingCircle1.InnerCircleRadius = 8;
-            this.loadingCircle1.Location = new System.Drawing.Point(257, 92);
+            this.loadingCircle1.Location = new System.Drawing.Point(253, 92);
             this.loadingCircle1.Name = "loadingCircle1";
             this.loadingCircle1.NumberSpoke = 24;
             this.loadingCircle1.OuterCircleRadius = 9;
@@ -219,7 +219,7 @@
             // ScanningLabel
             // 
             this.ScanningLabel.AutoSize = true;
-            this.ScanningLabel.Location = new System.Drawing.Point(208, 97);
+            this.ScanningLabel.Location = new System.Drawing.Point(204, 97);
             this.ScanningLabel.Name = "ScanningLabel";
             this.ScanningLabel.Size = new System.Drawing.Size(52, 13);
             this.ScanningLabel.TabIndex = 17;

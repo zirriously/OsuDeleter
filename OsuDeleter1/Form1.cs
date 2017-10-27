@@ -221,7 +221,7 @@ namespace OsuDeleter1
         {
             if (_osuDirectory == null)
             {
-                MessageBox.Show("You have not chosen an Osu! directory yet.");
+                MessageBox.Show("You have not chosen an Osu! directory.");
             }
             else
             {
