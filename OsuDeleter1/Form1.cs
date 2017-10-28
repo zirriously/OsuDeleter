@@ -145,10 +145,10 @@ namespace OsuDeleter1
                     
                     var result = new List<string>();
                     FileParser FileParser = new FileParser();
-                    if (_jpgFilesChecked)
                         try
                         {
-                            result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.jpg"));
+                            if (_jpgFilesChecked)
+                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.jpg"));
                             if (_pngFilesChecked)
                                 result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.png"));
                             if (_wavFilesChecked)
