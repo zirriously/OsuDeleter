@@ -22,5 +22,17 @@ namespace OsuDeleter.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OsuDirectory {
+            get {
+                return ((string)(this["OsuDirectory"]));
+            }
+            set {
+                this["OsuDirectory"] = value;
+            }
+        }
     }
 }
