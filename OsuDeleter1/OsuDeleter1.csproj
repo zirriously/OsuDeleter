@@ -154,6 +154,7 @@
     <None Include="Resources\OsuDeleterBG.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\OsuDeleterBG1.png" />
     <None Include="FodyWeavers.xml" />
     <Content Include="Icon1.ico" />
     <Content Include="MRG.Controls.UI.dll" />

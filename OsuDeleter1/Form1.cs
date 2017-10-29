@@ -48,6 +48,7 @@ namespace OsuDeleter
                     {
                         _osuDirectory = folderBrowserDialog1.SelectedPath;
                         directoryTextBox.Text = _osuDirectory;
+                        
                     }
                     else
                     {
@@ -289,6 +290,36 @@ namespace OsuDeleter
             ToggleLabels(false);
             _osuDirectory = null;
             directoryTextBox.Text = "Choose Osu! directory";
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AmountOfFilesTextLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TotalFileSize_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TotalFileSizeNumberLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void amountOfFilesFoundNumberLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ScanningLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
