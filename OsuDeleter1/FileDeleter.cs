@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace OsuDeleter1
+namespace OsuDeleter
 {
     public static class FileDeleter
     {

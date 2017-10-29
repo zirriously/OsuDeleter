@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuDeleter1
+namespace OsuDeleter
 {
     public class FileParser
     {

@@ -1,4 +1,4 @@
-﻿namespace OsuDeleter1
+﻿namespace OsuDeleter
 {
     partial class Form1
     {

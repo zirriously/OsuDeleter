@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Humanizer;
 
-namespace OsuDeleter1
+namespace OsuDeleter
 {
     public partial class Form1 : Form
     {

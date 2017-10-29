@@ -7,7 +7,7 @@
     <ProjectGuid>{42DA41DF-1755-475A-8F28-5182FBB0332F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>OsuDeleter</RootNamespace>
-    <AssemblyName>OsuDeleter1</AssemblyName>
+    <AssemblyName>OsuDeleter</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
