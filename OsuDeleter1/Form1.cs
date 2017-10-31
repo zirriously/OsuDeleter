@@ -131,6 +131,7 @@ namespace OsuDeleter
                 wavFilesCheckBox.Enabled = false;
             }
         }
+
         private void ScanFilesInParallel()
         {
             clearFilesButton.Enabled = false;
@@ -145,17 +146,17 @@ namespace OsuDeleter
                 {
                     
                     var result = new List<string>();
-                    FileParser FileParser = new FileParser();
+                    FileParser fileParser = new FileParser();
                         try
                         {
                             if (_jpgFilesChecked)
-                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.jpg"));
+                                result.AddRange(fileParser.ParseFiles(_osuDirectory, "*.jpg"));
                             if (_pngFilesChecked)
-                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.png"));
+                                result.AddRange(fileParser.ParseFiles(_osuDirectory, "*.png"));
                             if (_wavFilesChecked)
-                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.wav"));
+                                result.AddRange(fileParser.ParseFiles(_osuDirectory, "*.wav"));
                             if (_aviFilesChecked)
-                                result.AddRange(FileParser.ParseFiles(_osuDirectory, "*.avi"));
+                                result.AddRange(fileParser.ParseFiles(_osuDirectory, "*.avi"));
                         }
                         catch (Exception)
                         {
@@ -191,12 +192,8 @@ namespace OsuDeleter
 
                             _count = FileList.Count;
                             amountOfFilesFoundNumberLabel.Text = _count.ToString();
-                            DeleteFilesButton.Enabled = true;
                             AmountOfFilesTextLabel.Enabled = true;
-                            amountOfFilesFoundNumberLabel.Show();
-                            TotalFileSizeNumberLabel.Show();
-                            BeginScanButton.Enabled = true;
-
+                            
                             // Get total size of all files and show next to total amount of files
 
                             TotalFileSize.Enabled = true;
@@ -211,6 +208,10 @@ namespace OsuDeleter
                             clearFilesButton.Enabled = true;
                             DeleteFilesButton.Enabled = true;
                             EnableBoxes(true);
+                            DeleteFilesButton.Enabled = true;
+                            amountOfFilesFoundNumberLabel.Show();
+                            TotalFileSizeNumberLabel.Show();
+                            BeginScanButton.Enabled = true;
                         }
                     }
 
